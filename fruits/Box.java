@@ -2,47 +2,24 @@ package fruits;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-public class Box <F extends ArrayList<Fruit>> {
+public class Box <F extends Fruit> {
     private static final Float DEFAULT_WEIGHT = 0.5f; // Вес пустой коробки :D
-    private F fruits = (F) new ArrayList<Fruit>();
-    private String type;
+    private ArrayList<F> fruits;
 
-    public Box(F fruits) {
-        this.type = "EMPTY";
-        this.setFruits(fruits);
+    public Box(F[] fruits) {
+        this.fruits = new ArrayList<>();
+        this.setFruits(new ArrayList<>(List.of(fruits)));
     }
 
-    public F getFruits()
+    public ArrayList<F> getFruits()
     {
         return this.fruits;
     }
 
-    public void addFruit(Fruit fruit) {
-        switch (this.type) {
-            case "EMPTY":
-                if (fruit instanceof Apple) {
-                    this.type = "APPLE";
-                } else if (fruit instanceof Orange) {
-                    this.type = "ORANGE";
-                }
-                break;
-            case "ORANGE":
-                if (fruit instanceof Apple) {
-                    throw new RuntimeException("Trying to add incompatible fruit");
-                }
-                break;
-            case "APPLE":
-                if (fruit instanceof Orange) {
-                    throw new RuntimeException("Trying to add incompatible fruit");
-                }
-                break;
-        }
-        this.fruits.add(fruit);
-    }
-
     public Float getWeight() {
-        Iterator<Fruit> it = fruits.iterator();
+        Iterator<F> it = fruits.iterator();
         Float weight = Box.DEFAULT_WEIGHT;
         while (it.hasNext()) {
             weight += it.next().getWeight();
@@ -50,7 +27,7 @@ public class Box <F extends ArrayList<Fruit>> {
         return weight;
     }
 
-    public Boolean compare(Box<F> box) {
+    public Boolean compare(Box<?> box) {
         return this.getWeight().equals(box.getWeight());
     }
 
@@ -60,12 +37,10 @@ public class Box <F extends ArrayList<Fruit>> {
     }
 
     private void removeFruits() {
-        this.fruits = (F) new ArrayList<Fruit>();
+        this.fruits = new ArrayList<>();
     }
 
-    private void setFruits(F fruits) {
-        for (Fruit fruit : fruits) {
-            this.addFruit(fruit);
-        }
+    private void setFruits(ArrayList<F> fruits) {
+        this.fruits.addAll(fruits);
     }
 }

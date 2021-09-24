@@ -1,6 +1,5 @@
 import fruits.Apple;
 import fruits.Box;
-import fruits.Fruit;
 import fruits.Orange;
 
 import java.util.ArrayList;
@@ -21,18 +20,28 @@ public class Lesson1 {
         ArrayList<Integer> list = toArrayList(integers);
         System.out.println(list);
 
-        ArrayList<Fruit> list1 = new ArrayList<>();
-        ArrayList<Fruit> list2 = new ArrayList<>();
-        list1.add(new Apple());
-        list1.add(new Apple());
-        list2.add(new Orange());
-        Box<ArrayList<Fruit>> box1 = new Box<>(list1);
-        Box<ArrayList<Fruit>> box2 = new Box<>(list2);
+        Apple[] apples = {
+                new Apple(),
+                new Apple(),
+        };
+        Orange[] oranges = {
+                new Orange(),
+                new Orange(),
+        };
+        Apple[] apples2 = {
+                new Apple(),
+                new Apple(),
+                new Apple(),
+        };
+        Orange[] oranges2 = {
+                new Orange(),
+                new Orange(),
+        };
+        Box<Apple> box1 = new Box<>(apples);
+        Box<Orange> box2 = new Box<>(oranges);
         System.out.println(box1.compare(box2)); // false
-        list1.add(new Apple());
-        list2.add(new Orange());
-        Box<ArrayList<Fruit>> box3 = new Box<>(list1);
-        Box<ArrayList<Fruit>> box4 = new Box<>(list2);
+        Box<Apple> box3 = new Box<>(apples2);
+        Box<Orange> box4 = new Box<>(oranges2);
         System.out.println(box3.compare(box4)); // true
         System.out.println(box1.getWeight());
         System.out.println(box3.getWeight());
